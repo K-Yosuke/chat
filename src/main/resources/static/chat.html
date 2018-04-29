@@ -15,7 +15,7 @@
             $("#msgbox").innerHTML += "<div>" + msg + "</div>";
         }
         d.connect = function() {
-            var ws = new WebSocket("ws://secret-plains-89009.herokuapp.com/chat");
+            var ws = new WebSocket("wss://secret-plains-89009.herokuapp.com/chat");
             ws.onmessage = function(event) {
                 printMessage("Server : " + event.data);
             };
