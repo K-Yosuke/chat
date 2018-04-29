@@ -15,7 +15,7 @@
             $("#msgbox").innerHTML += "<div>" + msg + "</div>";
         }
         d.connect = function() {
-            var ws = new WebSocket("ws://localhost:8080/chat");
+            var ws = new WebSocket("ws://localhost/chat");
             ws.onmessage = function(event) {
                 printMessage("Server : " + event.data);
             };
