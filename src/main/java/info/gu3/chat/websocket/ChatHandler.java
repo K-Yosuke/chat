@@ -1,4 +1,4 @@
-package info.gu3.chatbackend.websocket;
+package info.gu3.chat.websocket;
 
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;

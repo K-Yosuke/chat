@@ -1,11 +1,9 @@
-package info.gu3.chatbackend;
+package info.gu3.chat;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 public class Application {
 
   public static void main(String[] args) {

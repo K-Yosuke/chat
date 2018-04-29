@@ -1,4 +1,4 @@
-package info.gu3.chatbackend;
+package info.gu3.chat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
