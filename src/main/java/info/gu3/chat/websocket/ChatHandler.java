@@ -23,6 +23,7 @@ public class ChatHandler extends AbstractWebSocketHandler {
 
   @Override
   public void handleTextMessage(WebSocketSession session, TextMessage message) {
+    System.out.println("handleTextMessage start");
     System.out.println(message.getPayload());
 
     this._sessions.forEach((id, s) -> {
@@ -36,6 +37,7 @@ public class ChatHandler extends AbstractWebSocketHandler {
 
   @Override
   public void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+    System.out.println("handleBinaryMessage start");
     String rcv = new String(message.getPayload().array(), StandardCharsets.UTF_8);
     System.out.println(rcv);
 
