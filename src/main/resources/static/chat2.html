@@ -9,53 +9,60 @@
 
   var ws = null;
   function connectAAA() {
-    var wsProtocol = ("https:" == location.protocol ? "wss://" : "ws://");
-    ws = new WebSocket(wsProtocol + location.hostname + ":" + location.port + "/chat");
-    document.getElementById("send").disabled = false;
-    document.getElementById("msg").disabled = false;
+    if (!document.getElementById("name").value.length > 0) {
+        alert("名前を入力してください");
+    } else {
 
-    document.getElementById("connect").disabled = true;
-    document.getElementById("name").disabled = true;
+      var wsProtocol = ("https:" == location.protocol ? "wss://" : "ws://");
+      ws = new WebSocket(wsProtocol + location.hostname + ":" + location.port + "/chat");
+      document.getElementById("send").disabled = false;
+      document.getElementById("msg").disabled = false;
 
-    ws.onopen = function (ev) {
-      console.log("Server Connected.");
-      ws.send("Server Connect.")
-    }
+      document.getElementById("connect").disabled = true;
+      document.getElementById("name").disabled = true;
 
-    ws.onmessage = function (ev) {
-      document.getElementById("msgbox").innerHTML += "<div>" + ev.data + "</div>";
-    }
+      ws.onopen = function (ev) {
+          console.log("Server Connected.");
+          ws.send(JSON.stringify(sendJson("Connect", "")));
+      };
 
-    ws.onclose = function (ev) {
-      console.log("Server Disconnected.");
-      ws = null;
-      document.getElementById("send").disabled = true;
-      document.getElementById("msg").disabled = true;
+      ws.onmessage = function (ev) {
+          var msg = JSON.parse(ev.data);
+          document.getElementById("msgbox").innerHTML += "<div>" + msg.name + ":" + msg.message + "</div>";
+      };
 
-      document.getElementById("connect").disabled = false;
-      document.getElementById("name").disabled = false;
+      ws.onclose = function (ev) {
+          console.log("Server Disconnected.");
+          ws = null;
+          document.getElementById("send").disabled = true;
+          document.getElementById("msg").disabled = true;
+
+          document.getElementById("connect").disabled = false;
+          document.getElementById("name").disabled = false;
+      };
+
     }
   }
 
   function sendBBB() {
-    var msg = document.getElementById("msg").value;
-    ws.send(msg)
+    ws.send(JSON.stringify(sendJson("Message", document.getElementById("msg").value)));
   }
 
-  function sendJson() {
-    var data = {
+  function sendJson(type, message) {
+    return {
       name: document.getElementById("name").value,
-      message: document.getElementById("msg").value
-    }
-    return data;
+      message: message.toString(),
+      type: type.toString()
+    };
   }
 
 </script>
 
 <form>
-  <input type="text" id="name" size="30" placeholder="名前を入力して入室してください">
-  <input type="button" id="connect" value="入室" onclick="connectAAA()"> <br>
-
+  <input type="text" id="name" size="30" placeholder="名前を入力して入室してください" required>
+  <input type="submit" id="connect" value="入室" onclick="connectAAA()"> <br>
+</form>
+<form>
   <input type="text" id="msg" size="50" disabled>
   <input type="button" id="send" value="送信" onclick="sendBBB()" disabled>
 </form>
